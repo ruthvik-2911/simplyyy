@@ -1,23 +1,35 @@
-name: CI Pipeline              # Workflow name (shows in GitHub UI)
+name: CI Pipeline
 
-on: [push, pull_request]      # When to run this workflow
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      -run: echo "Setting up"
-      -run: installing"
-      -run: echo "Building..."
+      - run: echo "Setting up"
+      - run: echo "Installing"
+      - run: echo "Building..."
   
-  test:
-    needs: build          # Wait for build to complete
+  test1:
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Testing..."
+      - run: echo "Running Parallel Test 1..."
+      
+  test2:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running Parallel Test 2..."
+  
+  test:
+    needs: [test1, test2]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running Main Test..."
   
   deploy:
-    needs: [build, test]  # Wait for both build and test
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - run: echo "Deploying..."
