@@ -6,7 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Building..."
+      -run: echo "Setting up"
+      -run: installing"
+      -run: echo "Building..."
   
   test:
     needs: build          # Wait for build to complete
