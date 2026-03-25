@@ -5,31 +5,16 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      build_id: ${{ steps.build_step.outputs.build_id }}
     steps:
-      - run: echo "Setting up"
-      - run: echo "Installing"
-      - run: echo "Building..."
-  
-  test1:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Running Parallel Test 1..."
-      
-  test2:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Running Parallel Test 2..."
-  
-  test:
-    needs: [test1, test2]
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Running Main Test..."
+      - name: Generate build ID
+        id: build_step
+        run: echo "build_id=$(date +%s)" >> $GITHUB_OUTPUT
   
   deploy:
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Deploying..."
+      - name: Use build ID
+        run: echo "Deploying build ${{ needs.build.outputs.build_id }}"
