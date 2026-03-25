@@ -1,25 +1,13 @@
-name: CI
+name: CI Pipeline              # Workflow name (shows in GitHub UI)
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push, pull_request]      # When to run this workflow
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
+jobs:                          # Define jobs
+  build:                       # Job ID
+    runs-on: ubuntu-latest     # Which runner to use
+    steps:                     # Steps to execute
+      - name: Checkout code    # Step name
+        uses: actions/checkout@v4  # Use an action
+      
+      - name: Run tests        # Another step
+        run: npm test          # Run a command

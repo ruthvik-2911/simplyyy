@@ -22,9 +22,9 @@ const todoController = {
   getTodoById: (req, res) => {
     const todo = todoModel.getById(req.params.id);
     if (!todo) {
-      return res.status(404).json({ 
-        success: false, 
-        error: 'Todo not found' 
+      return res.status(404).json({
+        success: false,
+        error: 'Todo not found'
       });
     }
     res.json({ success: true, data: todo });
@@ -37,11 +37,11 @@ const todoController = {
    */
   createTodo: (req, res) => {
     const { title } = req.body;
-    
+
     if (!title || title.trim() === '') {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'Title is required' 
+      return res.status(400).json({
+        success: false,
+        error: 'Title is required'
       });
     }
 
@@ -57,11 +57,11 @@ const todoController = {
   updateTodo: (req, res) => {
     const updates = req.body;
     const todo = todoModel.update(req.params.id, updates);
-    
+
     if (!todo) {
-      return res.status(404).json({ 
-        success: false, 
-        error: 'Todo not found' 
+      return res.status(404).json({
+        success: false,
+        error: 'Todo not found'
       });
     }
 
@@ -75,11 +75,11 @@ const todoController = {
    */
   deleteTodo: (req, res) => {
     const deleted = todoModel.delete(req.params.id);
-    
+
     if (!deleted) {
-      return res.status(404).json({ 
-        success: false, 
-        error: 'Todo not found' 
+      return res.status(404).json({
+        success: false,
+        error: 'Todo not found'
       });
     }
 
